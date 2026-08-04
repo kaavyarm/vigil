@@ -1,0 +1,932 @@
+{
+  "static_info": {
+    "RecordID": 140194.0,
+    "Age": 59.0,
+    "Gender": 0.0,
+    "Height": 152.4,
+    "ICUType": 3.0,
+    "Weight": 52.5,
+    "GenderLabel": "Female",
+    "ICUTypeLabel": "Medical ICU"
+  },
+  "timeline": [
+    {
+      "time": "00:22",
+      "hour": 0.37,
+      "measurements": {
+        "GCS": 3.0,
+        "HR": 112.0,
+        "NIDiasABP": 74.0,
+        "NIMAP": 86.67,
+        "NISysABP": 112.0,
+        "Temp": 38.8
+      }
+    },
+    {
+      "time": "00:37",
+      "hour": 0.62,
+      "measurements": {
+        "HR": 116.0,
+        "NIDiasABP": 74.0,
+        "NIMAP": 86.67,
+        "NISysABP": 112.0
+      }
+    },
+    {
+      "time": "00:52",
+      "hour": 0.87,
+      "measurements": {
+        "HR": 137.0,
+        "NIDiasABP": 74.0,
+        "NIMAP": 86.67,
+        "NISysABP": 112.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "01:07",
+      "hour": 1.12,
+      "measurements": {
+        "HR": 103.0,
+        "NIDiasABP": 56.0,
+        "NIMAP": 70.67,
+        "NISysABP": 100.0
+      }
+    },
+    {
+      "time": "01:22",
+      "hour": 1.37,
+      "measurements": {
+        "HR": 103.0,
+        "NIDiasABP": 51.0,
+        "NIMAP": 65.0,
+        "NISysABP": 93.0
+      }
+    },
+    {
+      "time": "01:52",
+      "hour": 1.87,
+      "measurements": {
+        "HR": 100.0
+      }
+    },
+    {
+      "time": "02:42",
+      "hour": 2.7,
+      "measurements": {
+        "MechVent": 1.0
+      }
+    },
+    {
+      "time": "02:52",
+      "hour": 2.87,
+      "measurements": {
+        "DiasABP": 58.0,
+        "GCS": 3.0,
+        "HR": 99.0,
+        "MAP": 74.0,
+        "SysABP": 107.0,
+        "Temp": 39.2,
+        "Urine": 10.0
+      }
+    },
+    {
+      "time": "03:14",
+      "hour": 3.23,
+      "measurements": {
+        "pH": 7.49,
+        "PaCO2": 33.0,
+        "PaO2": 191.0
+      }
+    },
+    {
+      "time": "03:52",
+      "hour": 3.87,
+      "measurements": {
+        "DiasABP": 78.0,
+        "HR": 115.0,
+        "MAP": 99.0,
+        "MechVent": 1.0,
+        "SysABP": 136.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "04:40",
+      "hour": 4.67,
+      "measurements": {
+        "pH": 7.42,
+        "PaCO2": 37.0,
+        "PaO2": 112.0
+      }
+    },
+    {
+      "time": "04:52",
+      "hour": 4.87,
+      "measurements": {
+        "BUN": 67.0,
+        "Creatinine": 5.8,
+        "DiasABP": 56.0,
+        "Glucose": 198.0,
+        "HCO3": 23.0,
+        "HCT": 23.1,
+        "HR": 110.0,
+        "Mg": 1.7,
+        "Platelets": 167.0,
+        "K": 3.4,
+        "Na": 129.0,
+        "SysABP": 110.0,
+        "Urine": 0.0,
+        "WBC": 14.0
+      }
+    },
+    {
+      "time": "05:07",
+      "hour": 5.12,
+      "measurements": {
+        "HR": 110.0
+      }
+    },
+    {
+      "time": "05:22",
+      "hour": 5.37,
+      "measurements": {
+        "HR": 109.0
+      }
+    },
+    {
+      "time": "05:37",
+      "hour": 5.62,
+      "measurements": {
+        "HR": 108.0
+      }
+    },
+    {
+      "time": "05:52",
+      "hour": 5.87,
+      "measurements": {
+        "HR": 104.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "06:07",
+      "hour": 6.12,
+      "measurements": {
+        "HR": 99.0
+      }
+    },
+    {
+      "time": "06:22",
+      "hour": 6.37,
+      "measurements": {
+        "DiasABP": 60.0,
+        "HR": 102.0,
+        "MAP": 79.0,
+        "SysABP": 120.0
+      }
+    },
+    {
+      "time": "06:52",
+      "hour": 6.87,
+      "measurements": {
+        "DiasABP": 61.0,
+        "GCS": 3.0,
+        "HR": 100.0,
+        "MAP": 81.0,
+        "SysABP": 120.0,
+        "Temp": 39.2,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "07:07",
+      "hour": 7.12,
+      "measurements": {
+        "DiasABP": 55.0,
+        "HR": 95.0,
+        "MAP": 74.0,
+        "SysABP": 111.0,
+        "Temp": 39.3
+      }
+    },
+    {
+      "time": "07:22",
+      "hour": 7.37,
+      "measurements": {
+        "DiasABP": 57.0,
+        "HR": 95.0,
+        "MAP": 76.0,
+        "SysABP": 114.0,
+        "Temp": 39.2
+      }
+    },
+    {
+      "time": "07:44",
+      "hour": 7.73,
+      "measurements": {
+        "FiO2": 0.4,
+        "MechVent": 1.0
+      }
+    },
+    {
+      "time": "07:52",
+      "hour": 7.87,
+      "measurements": {
+        "DiasABP": 56.0,
+        "HR": 93.0,
+        "MAP": 75.0,
+        "SysABP": 114.0,
+        "Temp": 39.1,
+        "Urine": 10.0
+      }
+    },
+    {
+      "time": "08:29",
+      "hour": 8.48,
+      "measurements": {
+        "pH": 7.38,
+        "PaCO2": 37.0,
+        "PaO2": 130.0
+      }
+    },
+    {
+      "time": "08:52",
+      "hour": 8.87,
+      "measurements": {
+        "DiasABP": 56.0,
+        "HR": 93.0,
+        "MAP": 74.0,
+        "SysABP": 107.0
+      }
+    },
+    {
+      "time": "09:18",
+      "hour": 9.3,
+      "measurements": {
+        "HCT": 26.2
+      }
+    },
+    {
+      "time": "09:29",
+      "hour": 9.48,
+      "measurements": {
+        "Lactate": 1.7
+      }
+    },
+    {
+      "time": "09:52",
+      "hour": 9.87,
+      "measurements": {
+        "DiasABP": 60.0,
+        "HR": 94.0,
+        "MAP": 78.0,
+        "SysABP": 109.0,
+        "Temp": 39.1,
+        "Urine": 15.0
+      }
+    },
+    {
+      "time": "10:07",
+      "hour": 10.12,
+      "measurements": {
+        "DiasABP": 55.0,
+        "HR": 91.0,
+        "MAP": 73.0,
+        "SysABP": 102.0,
+        "Temp": 39.1
+      }
+    },
+    {
+      "time": "10:22",
+      "hour": 10.37,
+      "measurements": {
+        "DiasABP": 57.0,
+        "HR": 89.0,
+        "MAP": 75.0,
+        "SysABP": 107.0,
+        "Temp": 38.7
+      }
+    },
+    {
+      "time": "10:37",
+      "hour": 10.62,
+      "measurements": {
+        "DiasABP": 57.0,
+        "HR": 87.0,
+        "MAP": 75.0,
+        "SysABP": 106.0,
+        "Temp": 38.7
+      }
+    },
+    {
+      "time": "10:52",
+      "hour": 10.87,
+      "measurements": {
+        "DiasABP": 57.0,
+        "GCS": 3.0,
+        "HR": 87.0,
+        "MAP": 75.0,
+        "SysABP": 105.0,
+        "Temp": 38.1
+      }
+    },
+    {
+      "time": "11:52",
+      "hour": 11.87,
+      "measurements": {
+        "DiasABP": 53.0,
+        "HR": 83.0,
+        "MAP": 71.0,
+        "SysABP": 99.0
+      }
+    },
+    {
+      "time": "12:02",
+      "hour": 12.03,
+      "measurements": {
+        "FiO2": 0.4,
+        "MechVent": 1.0
+      }
+    },
+    {
+      "time": "12:07",
+      "hour": 12.12,
+      "measurements": {
+        "FiO2": 0.4,
+        "MechVent": 1.0
+      }
+    },
+    {
+      "time": "12:12",
+      "hour": 12.2,
+      "measurements": {
+        "BUN": 66.0,
+        "Creatinine": 5.7,
+        "Glucose": 158.0,
+        "HCO3": 19.0,
+        "HCT": 30.6,
+        "Mg": 2.5,
+        "Platelets": 142.0,
+        "K": 3.4,
+        "Na": 129.0,
+        "TroponinT": 0.65,
+        "WBC": 15.8
+      }
+    },
+    {
+      "time": "12:52",
+      "hour": 12.87,
+      "measurements": {
+        "DiasABP": 69.0,
+        "HR": 92.0,
+        "MAP": 90.0,
+        "SysABP": 123.0,
+        "Temp": 38.1,
+        "Urine": 10.0
+      }
+    },
+    {
+      "time": "13:03",
+      "hour": 13.05,
+      "measurements": {
+        "pH": 7.35,
+        "PaCO2": 37.0,
+        "PaO2": 141.0
+      }
+    },
+    {
+      "time": "14:03",
+      "hour": 14.05,
+      "measurements": {
+        "Lactate": 1.2
+      }
+    },
+    {
+      "time": "14:33",
+      "hour": 14.55,
+      "measurements": {
+        "pH": 7.36,
+        "PaCO2": 36.0,
+        "PaO2": 102.0
+      }
+    },
+    {
+      "time": "14:52",
+      "hour": 14.87,
+      "measurements": {
+        "DiasABP": 63.0,
+        "FiO2": 0.4,
+        "GCS": 5.0,
+        "HR": 91.0,
+        "MAP": 84.0,
+        "MechVent": 1.0,
+        "SysABP": 119.0,
+        "Temp": 38.4,
+        "Urine": 17.0
+      }
+    },
+    {
+      "time": "15:33",
+      "hour": 15.55,
+      "measurements": {
+        "Lactate": 1.7
+      }
+    },
+    {
+      "time": "15:52",
+      "hour": 15.87,
+      "measurements": {
+        "DiasABP": 61.0,
+        "FiO2": 0.4,
+        "HR": 87.0,
+        "MAP": 81.0,
+        "MechVent": 1.0,
+        "SysABP": 115.0,
+        "Urine": 14.0
+      }
+    },
+    {
+      "time": "16:52",
+      "hour": 16.87,
+      "measurements": {
+        "DiasABP": 60.0,
+        "HR": 88.0,
+        "MAP": 80.0,
+        "SysABP": 114.0,
+        "Temp": 38.8,
+        "Urine": 5.0
+      }
+    },
+    {
+      "time": "17:52",
+      "hour": 17.87,
+      "measurements": {
+        "DiasABP": 50.0,
+        "FiO2": 0.4,
+        "HR": 85.0,
+        "MAP": 70.0,
+        "MechVent": 1.0,
+        "SysABP": 105.0
+      }
+    },
+    {
+      "time": "18:27",
+      "hour": 18.45,
+      "measurements": {
+        "FiO2": 0.4,
+        "MechVent": 1.0
+      }
+    },
+    {
+      "time": "18:52",
+      "hour": 18.87,
+      "measurements": {
+        "DiasABP": 53.0,
+        "GCS": 6.0,
+        "HR": 90.0,
+        "MAP": 72.0,
+        "SysABP": 106.0,
+        "Temp": 38.3,
+        "Urine": 15.0
+      }
+    },
+    {
+      "time": "20:52",
+      "hour": 20.87,
+      "measurements": {
+        "DiasABP": 48.0,
+        "HR": 90.0,
+        "MAP": 67.0,
+        "SysABP": 101.0,
+        "Urine": 5.0
+      }
+    },
+    {
+      "time": "21:52",
+      "hour": 21.87,
+      "measurements": {
+        "DiasABP": 83.0,
+        "FiO2": 0.4,
+        "HR": 105.0,
+        "MAP": 107.0,
+        "MechVent": 1.0,
+        "SysABP": 155.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "22:22",
+      "hour": 22.37,
+      "measurements": {
+        "pH": 7.26,
+        "BUN": 66.0,
+        "Creatinine": 5.7,
+        "Glucose": 134.0,
+        "HCO3": 19.0,
+        "K": 4.8,
+        "PaCO2": 41.0,
+        "PaO2": 122.0,
+        "Na": 133.0,
+        "TroponinT": 0.49
+      }
+    },
+    {
+      "time": "22:52",
+      "hour": 22.87,
+      "measurements": {
+        "DiasABP": 52.0,
+        "GCS": 6.0,
+        "HR": 82.0,
+        "MAP": 68.0,
+        "SysABP": 97.0,
+        "Temp": 38.1,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "23:52",
+      "hour": 23.87,
+      "measurements": {
+        "DiasABP": 40.0,
+        "HR": 79.0,
+        "MAP": 56.0,
+        "SysABP": 85.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "24:52",
+      "hour": 24.87,
+      "measurements": {
+        "DiasABP": 52.0,
+        "HR": 73.0,
+        "MAP": 71.0,
+        "SysABP": 105.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "25:52",
+      "hour": 25.87,
+      "measurements": {
+        "DiasABP": 53.0,
+        "HR": 72.0,
+        "MAP": 73.0,
+        "SysABP": 109.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "26:52",
+      "hour": 26.87,
+      "measurements": {
+        "DiasABP": 56.0,
+        "GCS": 6.0,
+        "HR": 74.0,
+        "MAP": 74.0,
+        "SysABP": 110.0,
+        "Temp": 38.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "27:52",
+      "hour": 27.87,
+      "measurements": {
+        "DiasABP": 50.0,
+        "FiO2": 0.4,
+        "HR": 72.0,
+        "MAP": 68.0,
+        "MechVent": 1.0,
+        "SysABP": 101.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "27:59",
+      "hour": 27.98,
+      "measurements": {
+        "pH": 7.35,
+        "PaCO2": 38.0,
+        "PaO2": 169.0
+      }
+    },
+    {
+      "time": "28:52",
+      "hour": 28.87,
+      "measurements": {
+        "DiasABP": 73.0,
+        "HR": 86.0,
+        "MAP": 94.0,
+        "SysABP": 137.0,
+        "Temp": 37.0
+      }
+    },
+    {
+      "time": "29:52",
+      "hour": 29.87,
+      "measurements": {
+        "DiasABP": 54.0,
+        "HR": 82.0,
+        "MAP": 72.0,
+        "SysABP": 103.0,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "30:52",
+      "hour": 30.87,
+      "measurements": {
+        "DiasABP": 53.0,
+        "FiO2": 0.4,
+        "GCS": 6.0,
+        "HR": 80.0,
+        "MAP": 71.0,
+        "MechVent": 1.0,
+        "SysABP": 104.0,
+        "Temp": 37.2
+      }
+    },
+    {
+      "time": "31:52",
+      "hour": 31.87,
+      "measurements": {
+        "DiasABP": 61.0,
+        "HR": 80.0,
+        "MAP": 82.0,
+        "SysABP": 120.0,
+        "Urine": 50.0
+      }
+    },
+    {
+      "time": "32:52",
+      "hour": 32.87,
+      "measurements": {
+        "DiasABP": 59.0,
+        "HR": 79.0,
+        "MAP": 79.0,
+        "SysABP": 117.0
+      }
+    },
+    {
+      "time": "33:52",
+      "hour": 33.87,
+      "measurements": {
+        "DiasABP": 59.0,
+        "HR": 78.0,
+        "MAP": 80.0,
+        "SysABP": 117.0
+      }
+    },
+    {
+      "time": "34:19",
+      "hour": 34.32,
+      "measurements": {
+        "pH": 7.3,
+        "PaCO2": 45.0,
+        "PaO2": 141.0
+      }
+    },
+    {
+      "time": "34:52",
+      "hour": 34.87,
+      "measurements": {
+        "Albumin": 2.5,
+        "BUN": 68.0,
+        "Creatinine": 5.9,
+        "DiasABP": 59.0,
+        "GCS": 6.0,
+        "Glucose": 100.0,
+        "HCO3": 19.0,
+        "HCT": 29.1,
+        "HR": 77.0,
+        "Mg": 2.3,
+        "MAP": 80.0,
+        "Platelets": 148.0,
+        "K": 4.4,
+        "Na": 132.0,
+        "SysABP": 118.0,
+        "Temp": 37.0,
+        "TroponinT": 0.38,
+        "WBC": 15.4
+      }
+    },
+    {
+      "time": "35:22",
+      "hour": 35.37,
+      "measurements": {
+        "FiO2": 0.4,
+        "MechVent": 1.0
+      }
+    },
+    {
+      "time": "35:52",
+      "hour": 35.87,
+      "measurements": {
+        "DiasABP": 61.0,
+        "HR": 76.0,
+        "MAP": 83.0,
+        "SysABP": 121.0
+      }
+    },
+    {
+      "time": "36:52",
+      "hour": 36.87,
+      "measurements": {
+        "DiasABP": 63.0,
+        "HR": 76.0,
+        "MAP": 86.0,
+        "SysABP": 127.0
+      }
+    },
+    {
+      "time": "38:52",
+      "hour": 38.87,
+      "measurements": {
+        "DiasABP": 65.0,
+        "FiO2": 0.4,
+        "GCS": 7.0,
+        "HR": 79.0,
+        "MAP": 86.0,
+        "MechVent": 1.0,
+        "SysABP": 125.0,
+        "Temp": 37.1,
+        "Urine": 35.0
+      }
+    },
+    {
+      "time": "39:52",
+      "hour": 39.87,
+      "measurements": {
+        "DiasABP": 65.0,
+        "HR": 76.0,
+        "MAP": 88.0,
+        "SysABP": 127.0,
+        "Urine": 45.0
+      }
+    },
+    {
+      "time": "40:52",
+      "hour": 40.87,
+      "measurements": {
+        "DiasABP": 55.0,
+        "HR": 75.0,
+        "MAP": 77.0,
+        "SysABP": 115.0,
+        "Urine": 10.0
+      }
+    },
+    {
+      "time": "41:32",
+      "hour": 41.53,
+      "measurements": {
+        "DiasABP": 57.0,
+        "HR": 75.0,
+        "MAP": 80.0,
+        "SysABP": 122.0
+      }
+    },
+    {
+      "time": "41:52",
+      "hour": 41.87,
+      "measurements": {
+        "DiasABP": 62.0,
+        "HR": 87.0,
+        "MAP": 87.0,
+        "SysABP": 135.0,
+        "Urine": 5.0
+      }
+    },
+    {
+      "time": "42:37",
+      "hour": 42.62,
+      "measurements": {
+        "DiasABP": 87.0,
+        "GCS": 11.0,
+        "HR": 118.0,
+        "MAP": 117.0,
+        "SysABP": 173.0
+      }
+    },
+    {
+      "time": "42:52",
+      "hour": 42.87,
+      "measurements": {
+        "DiasABP": 80.0,
+        "FiO2": 0.4,
+        "HR": 105.0,
+        "MAP": 108.0,
+        "MechVent": 1.0,
+        "SysABP": 160.0,
+        "Temp": 37.2,
+        "Urine": 5.0
+      }
+    },
+    {
+      "time": "43:22",
+      "hour": 43.37,
+      "measurements": {
+        "DiasABP": 78.0,
+        "HR": 99.0,
+        "MAP": 105.0,
+        "SysABP": 152.0
+      }
+    },
+    {
+      "time": "43:50",
+      "hour": 43.83,
+      "measurements": {
+        "pH": 7.29,
+        "PaCO2": 34.0,
+        "PaO2": 123.0
+      }
+    },
+    {
+      "time": "43:52",
+      "hour": 43.87,
+      "measurements": {
+        "DiasABP": 76.0,
+        "HR": 95.0,
+        "MAP": 102.0,
+        "SysABP": 148.0,
+        "Urine": 19.0
+      }
+    },
+    {
+      "time": "44:52",
+      "hour": 44.87,
+      "measurements": {
+        "DiasABP": 79.0,
+        "GCS": 10.0,
+        "HR": 97.0,
+        "MAP": 105.0,
+        "SysABP": 151.0,
+        "Urine": 13.0
+      }
+    },
+    {
+      "time": "45:52",
+      "hour": 45.87,
+      "measurements": {
+        "DiasABP": 73.0,
+        "HR": 95.0,
+        "MAP": 99.0,
+        "SysABP": 144.0
+      }
+    },
+    {
+      "time": "46:22",
+      "hour": 46.37,
+      "measurements": {
+        "DiasABP": 75.0,
+        "HR": 99.0,
+        "MAP": 101.0,
+        "SysABP": 147.0
+      }
+    },
+    {
+      "time": "46:37",
+      "hour": 46.62,
+      "measurements": {
+        "DiasABP": 87.0,
+        "HR": 123.0,
+        "MAP": 114.0,
+        "SysABP": 166.0
+      }
+    },
+    {
+      "time": "46:52",
+      "hour": 46.87,
+      "measurements": {
+        "DiasABP": 74.0,
+        "FiO2": 1.0,
+        "GCS": 9.0,
+        "HR": 104.0,
+        "MAP": 100.0,
+        "SysABP": 146.0,
+        "Temp": 36.9,
+        "Urine": 0.0
+      }
+    },
+    {
+      "time": "47:07",
+      "hour": 47.12,
+      "measurements": {
+        "FiO2": 0.4
+      }
+    },
+    {
+      "time": "47:52",
+      "hour": 47.87,
+      "measurements": {
+        "DiasABP": 77.0,
+        "FiO2": 0.4,
+        "HR": 106.0,
+        "MAP": 104.0,
+        "MechVent": 1.0,
+        "SysABP": 149.0
+      }
+    }
+  ]
+}

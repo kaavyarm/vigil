@@ -1,0 +1,55 @@
+{
+  "static_info": {
+    "RecordID": 140117.0,
+    "Age": 54.0,
+    "Gender": 1.0,
+    "Height": NaN,
+    "ICUType": 3.0,
+    "Weight": NaN,
+    "GenderLabel": "Male",
+    "ICUTypeLabel": "Medical ICU"
+  },
+  "timeline": [
+    {
+      "time": "03:03",
+      "hour": 3.05,
+      "measurements": {
+        "pH": 7.42,
+        "PaCO2": 38.0,
+        "PaO2": 167.0
+      }
+    },
+    {
+      "time": "08:52",
+      "hour": 8.87,
+      "measurements": {
+        "BUN": 12.0,
+        "Creatinine": 0.8,
+        "Glucose": 122.0,
+        "HCO3": 25.0,
+        "HCT": 36.8,
+        "Mg": 2.3,
+        "Platelets": 197.0,
+        "K": 3.9,
+        "Na": 138.0,
+        "WBC": 8.4
+      }
+    },
+    {
+      "time": "34:18",
+      "hour": 34.3,
+      "measurements": {
+        "BUN": 9.0,
+        "Creatinine": 0.7,
+        "Glucose": 103.0,
+        "HCO3": 26.0,
+        "HCT": 39.7,
+        "Mg": 2.2,
+        "Platelets": 209.0,
+        "K": 4.0,
+        "Na": 142.0,
+        "WBC": 12.8
+      }
+    }
+  ]
+}

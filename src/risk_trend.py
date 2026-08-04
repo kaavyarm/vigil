@@ -8,10 +8,11 @@ from explain_model import get_risk_level
 from feature_engineering import load_patient_json, extract_patient_features
 
 
-PROCESSED_PATIENT_DIR = Path("data/processed/patients")
-MODEL_PATH = Path("models/vigil_xgboost_initial.joblib")
-FEATURE_COLUMNS_PATH = Path("models/feature_columns.joblib")
-OUTPUT_DIR = Path("data/predictions")
+_ROOT = Path(__file__).resolve().parent.parent
+PROCESSED_PATIENT_DIR = _ROOT / "data/processed/patients"
+MODEL_PATH = _ROOT / "models/vigil_xgboost_initial.joblib"
+FEATURE_COLUMNS_PATH = _ROOT / "models/feature_columns.joblib"
+OUTPUT_DIR = _ROOT / "data/predictions"
 
 
 SNAPSHOT_HOURS = [6, 12, 18, 24, 30, 36, 42, 48]

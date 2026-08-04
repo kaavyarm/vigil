@@ -4,8 +4,9 @@ import json
 from feature_engineering import load_patient_json
 
 
-PROCESSED_PATIENT_DIR = Path("data/processed/patients")
-OUTPUT_DIR = Path("data/predictions")
+_ROOT = Path(__file__).resolve().parent.parent
+PROCESSED_PATIENT_DIR = _ROOT / "data/processed/patients"
+OUTPUT_DIR = _ROOT / "data/predictions"
 
 
 PARAMETER_CATEGORY = {

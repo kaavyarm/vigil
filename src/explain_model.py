@@ -6,10 +6,11 @@ import pandas as pd
 import shap
 
 
-DATA_PATH = Path("data/features/training_dataset.csv")
-MODEL_PATH = Path("models/vigil_xgboost_initial.joblib")
-FEATURE_COLUMNS_PATH = Path("models/feature_columns.joblib")
-PREDICTIONS_DIR = Path("data/predictions")
+_ROOT = Path(__file__).resolve().parent.parent
+DATA_PATH = _ROOT / "data/features/training_dataset.csv"
+MODEL_PATH = _ROOT / "models/vigil_xgboost_initial.joblib"
+FEATURE_COLUMNS_PATH = _ROOT / "models/feature_columns.joblib"
+PREDICTIONS_DIR = _ROOT / "data/predictions"
 
 
 PARAMETER_METADATA = {
