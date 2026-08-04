@@ -2,6 +2,8 @@
 
 ICU mortality risk prediction and monitoring dashboard built on the [PhysioNet 2012 Challenge](https://physionet.org/content/challenge-2012/1.0.0/) dataset.
 
+![Vigil ICU Dashboard](docs/screenshot.png)
+
 ## What it does
 
 Vigil ingests 48-hour ICU patient records, engineers time-series features from raw clinical measurements, and predicts in-hospital mortality risk using an XGBoost model. A FastAPI backend serves predictions to a React dashboard that shows:
