@@ -1,0 +1,21 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Raw and processed data (PhysioNet data cannot be redistributed)
+data/raw/
+data/processed/
+data/predictions/
+
+# macOS
+.DS_Store
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Editor
+.vscode/
+.idea/
