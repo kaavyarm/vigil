@@ -2,51 +2,60 @@ import json
 import logging
 import logging.config
 import math
-import sys
 import threading
 from pathlib import Path
+from typing import Any
 
 import joblib
 import numpy as np
 import pandas as pd
+import shap
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
+import db
+from explain_model import (
+    explain_patient,
+    explain_vector,
+    get_risk_level,
+    load_model_and_data,
+)
+from process_one_patient import ICU_TYPE_MAP
+from risk_trend import build_risk_trend
+from s3_loader import sync_from_s3
+from timeline_events import build_patient_timeline_events
+
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-sys.path.append(str(PROJECT_ROOT / "src"))
 
-import shap  # noqa: E402
 
-import db  # noqa: E402
-from explain_model import explain_patient, explain_vector, load_model_and_data  # noqa: E402
-from process_one_patient import ICU_TYPE_MAP  # noqa: E402
-from risk_trend import build_risk_trend  # noqa: E402
-from s3_loader import sync_from_s3  # noqa: E402
-from timeline_events import build_patient_timeline_events  # noqa: E402
+# ── Logging ───────────────────────────────────────────────────────────────────
 
-# ── Structured JSON logging (CloudWatch-compatible) ────────────────────────────
+class _JsonFormatter(logging.Formatter):
+    """Structured JSON log lines — compatible with CloudWatch Logs Insights."""
+
+    def format(self, record: logging.LogRecord) -> str:
+        return json.dumps({
+            "time": self.formatTime(record, self.datefmt),
+            "level": record.levelname,
+            "name": record.name,
+            "msg": record.getMessage(),
+        })
+
+
 logging.config.dictConfig({
     "version": 1,
     "disable_existing_loggers": False,
-    "formatters": {
-        "json": {
-            "()": "logging.Formatter",
-            "fmt": '{"time":"%(asctime)s","level":"%(levelname)s","name":"%(name)s","msg":%(message)s}',
-        }
-    },
-    "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-            "formatter": "json",
-        }
-    },
+    "formatters": {"json": {"()": _JsonFormatter}},
+    "handlers": {"console": {"class": "logging.StreamHandler", "formatter": "json"}},
     "root": {"handlers": ["console"], "level": "INFO"},
 })
 
 logger = logging.getLogger(__name__)
 
-# ── Startup: S3 model sync then local load ─────────────────────────────────────
+
+# ── Startup ───────────────────────────────────────────────────────────────────
+
 sync_from_s3(PROJECT_ROOT)
 
 model, df, X, feature_columns = load_model_and_data()
@@ -56,26 +65,9 @@ train_medians = joblib.load(PROJECT_ROOT / "models/train_medians.joblib")
 # SHAP TreeExplainer is not thread-safe; serialize all calls through this lock.
 _explainer_lock = threading.Lock()
 
-# ── Database init (no-ops if DATABASE_URL is unset) ───────────────────────────
 db.init_pool()
 
 PATIENT_DIR = PROJECT_ROOT / "data/processed/patients"
-
-
-# ── Helpers ───────────────────────────────────────────────────────────────────
-
-def make_json_safe(obj):
-    if isinstance(obj, dict):
-        return {str(key): make_json_safe(value) for key, value in obj.items()}
-    if isinstance(obj, list):
-        return [make_json_safe(item) for item in obj]
-    if isinstance(obj, np.generic):
-        return obj.item()
-    if isinstance(obj, float):
-        if math.isnan(obj) or math.isinf(obj):
-            return None
-        return obj
-    return obj
 
 
 # ── App ───────────────────────────────────────────────────────────────────────
@@ -91,6 +83,8 @@ app.add_middleware(
 )
 
 
+# ── Models ────────────────────────────────────────────────────────────────────
+
 class PatientVitals(BaseModel):
     Age: float | None = None
     HR: float | None = None
@@ -104,6 +98,20 @@ class PatientVitals(BaseModel):
     BUN: float | None = None
     Urine: float | None = None
     MechVent: int | None = None
+
+
+# ── Helpers ───────────────────────────────────────────────────────────────────
+
+def make_json_safe(obj: Any) -> Any:
+    if isinstance(obj, dict):
+        return {str(key): make_json_safe(value) for key, value in obj.items()}
+    if isinstance(obj, list):
+        return [make_json_safe(item) for item in obj]
+    if isinstance(obj, np.generic):
+        return obj.item()
+    if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
+        return None
+    return obj
 
 
 def _build_predict_vector(vitals: PatientVitals) -> pd.DataFrame:
@@ -133,6 +141,18 @@ def _build_predict_vector(vitals: PatientVitals) -> pd.DataFrame:
     return pd.DataFrame([{col: features.get(col, np.nan) for col in feature_columns}])
 
 
+def _patient_summary(record_id: int, age: int | None, icu_type: int | None, risk: float) -> dict:
+    return {
+        "record_id": record_id,
+        "age": age,
+        "icu_type": icu_type,
+        "icu_type_label": ICU_TYPE_MAP.get(icu_type, "ICU") if icu_type else "ICU",
+        "mortality_risk": risk,
+        "mortality_risk_percent": round(risk * 100, 1),
+        "status": get_risk_level(risk),
+    }
+
+
 _monitoring_report: dict | None = None
 _monitoring_lock = threading.Lock()
 
@@ -140,12 +160,12 @@ _monitoring_lock = threading.Lock()
 # ── Routes ────────────────────────────────────────────────────────────────────
 
 @app.get("/")
-def root():
+def root() -> dict:
     return {"message": "Vigil API is running"}
 
 
 @app.get("/health")
-def health():
+def health() -> dict:
     """ECS / load-balancer health check."""
     return {
         "status": "ok",
@@ -154,7 +174,7 @@ def health():
 
 
 @app.get("/monitoring/report")
-def get_monitoring_report():
+def get_monitoring_report() -> dict:
     global _monitoring_report
     if _monitoring_report is None:
         with _monitoring_lock:
@@ -171,38 +191,28 @@ def get_monitoring_report():
 
 
 @app.get("/patients")
-def get_patients(limit: int = 500):
+def get_patients(limit: int = 500) -> list:
     if db.is_available():
         return db.list_patients(limit)
 
     subset = df.head(limit)
     risks = model.predict_proba(X.loc[subset.index])[:, 1]
 
-    patients = []
-    for i, (_, row) in enumerate(subset.iterrows()):
-        risk = float(risks[i])
-        icu_raw = None if pd.isna(row["ICUType"]) else int(row["ICUType"])
-        patients.append({
-            "record_id": int(row["RecordID"]),
-            "age": None if pd.isna(row["Age"]) else int(row["Age"]),
-            "icu_type": icu_raw,
-            "icu_type_label": ICU_TYPE_MAP.get(icu_raw, "ICU") if icu_raw else "ICU",
-            "mortality_risk": risk,
-            "mortality_risk_percent": round(risk * 100, 1),
-            "status": (
-                "Critical" if risk >= 0.8
-                else "High" if risk >= 0.5
-                else "Moderate" if risk >= 0.2
-                else "Low"
-            ),
-        })
-
+    patients = [
+        _patient_summary(
+            record_id=int(row["RecordID"]),
+            age=None if pd.isna(row["Age"]) else int(row["Age"]),
+            icu_type=None if pd.isna(row["ICUType"]) else int(row["ICUType"]),
+            risk=float(risks[i]),
+        )
+        for i, (_, row) in enumerate(subset.iterrows())
+    ]
     patients.sort(key=lambda p: p["mortality_risk"], reverse=True)
     return patients
 
 
 @app.post("/predict")
-def predict_custom(vitals: PatientVitals):
+def predict_custom(vitals: PatientVitals) -> dict:
     vector = _build_predict_vector(vitals)
     with _explainer_lock:
         result = explain_vector(model=model, feature_vector=vector, top_n=10, explainer=explainer)
@@ -210,22 +220,22 @@ def predict_custom(vitals: PatientVitals):
 
 
 @app.get("/patients/{record_id}")
-def get_patient(record_id: int):
+def get_patient(record_id: int) -> dict:
     if db.is_available():
         data = db.get_patient(record_id)
         if data is None:
-            raise HTTPException(status_code=404, detail="Patient not found")
+            raise HTTPException(status_code=404, detail="Patient not found") from None
         return make_json_safe(data)
 
     patient_path = PATIENT_DIR / f"{record_id}.json"
     if not patient_path.exists():
-        raise HTTPException(status_code=404, detail="Patient not found")
+        raise HTTPException(status_code=404, detail="Patient not found") from None
     with open(patient_path) as f:
         return make_json_safe(json.load(f))
 
 
 @app.get("/patients/{record_id}/explanation")
-def get_patient_explanation(record_id: int):
+def get_patient_explanation(record_id: int) -> dict:
     try:
         with _explainer_lock:
             result = explain_patient(
@@ -233,20 +243,20 @@ def get_patient_explanation(record_id: int):
             )
         return make_json_safe(result)
     except ValueError:
-        raise HTTPException(status_code=404, detail="Patient not found")
+        raise HTTPException(status_code=404, detail="Patient not found") from None
 
 
 @app.get("/patients/{record_id}/risk-trend")
-def get_patient_risk_trend(record_id: int):
+def get_patient_risk_trend(record_id: int) -> dict:
     try:
         return make_json_safe(build_risk_trend(record_id, model, feature_columns))
     except FileNotFoundError:
-        raise HTTPException(status_code=404, detail="Patient not found")
+        raise HTTPException(status_code=404, detail="Patient not found") from None
 
 
 @app.get("/patients/{record_id}/timeline-events")
-def get_patient_timeline_events(record_id: int):
+def get_patient_timeline_events(record_id: int) -> dict:
     try:
         return make_json_safe(build_patient_timeline_events(record_id))
     except FileNotFoundError:
-        raise HTTPException(status_code=404, detail="Patient not found")
+        raise HTTPException(status_code=404, detail="Patient not found") from None

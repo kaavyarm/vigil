@@ -170,7 +170,7 @@ def _shap_explanation(model, patient_features: pd.DataFrame, top_n: int, explain
     for feat, val, sv in zip(
         patient_features.columns,
         patient_features.iloc[0],
-        shap_values[0],
+        shap_values[0], strict=False,
     ):
         rows.append({
             "feature": str(feat),

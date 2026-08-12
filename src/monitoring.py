@@ -1,5 +1,4 @@
 from dataclasses import asdict, dataclass
-from typing import Optional
 
 import numpy as np
 import pandas as pd
@@ -65,7 +64,7 @@ class MonitoringReport:
     top_drifted_features: list
     missingness_drifted: list
     prediction_drift: PredictionDriftResult
-    calibration_drift: Optional[CalibrationDriftResult]
+    calibration_drift: CalibrationDriftResult | None
     overall_health: str  # "healthy" | "warning" | "critical"
 
     def to_dict(self) -> dict:
@@ -205,10 +204,10 @@ def generate_report(
     incoming_df: pd.DataFrame,
     train_preds: np.ndarray,
     incoming_preds: np.ndarray,
-    y_true: Optional[np.ndarray] = None,
-    y_proba: Optional[np.ndarray] = None,
-    baseline_brier: Optional[float] = None,
-    baseline_ece: Optional[float] = None,
+    y_true: np.ndarray | None = None,
+    y_proba: np.ndarray | None = None,
+    baseline_brier: float | None = None,
+    baseline_ece: float | None = None,
 ) -> MonitoringReport:
     feature_results = compute_feature_drift(train_df, incoming_df)
     n_drifted = sum(1 for r in feature_results if r.status == "drifted")

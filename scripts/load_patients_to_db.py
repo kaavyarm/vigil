@@ -47,7 +47,7 @@ def _load_risk_map() -> dict[int, tuple[float, int]]:
 
     return {
         int(rid): (float(risk), int(outcome))
-        for rid, risk, outcome in zip(record_ids, risks, outcomes)
+        for rid, risk, outcome in zip(record_ids, risks, outcomes, strict=False)
     }
 
 

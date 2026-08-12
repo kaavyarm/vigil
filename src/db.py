@@ -8,7 +8,8 @@ check `is_available()` before calling any query functions.
 import json
 import logging
 import os
-from typing import Optional
+
+from explain_model import get_risk_level
 
 logger = logging.getLogger(__name__)
 
@@ -74,7 +75,7 @@ def _fetchall(sql: str, params=None) -> list[tuple]:
         _pool.putconn(conn)
 
 
-def _fetchone(sql: str, params=None) -> Optional[tuple]:
+def _fetchone(sql: str, params=None) -> tuple | None:
     conn = _pool.getconn()
     try:
         with conn.cursor() as cur:
@@ -89,8 +90,8 @@ def _fetchone(sql: str, params=None) -> Optional[tuple]:
 def upsert_patient(
     record_id: int,
     data: dict,
-    outcome: Optional[int] = None,
-    predicted_risk: Optional[float] = None,
+    outcome: int | None = None,
+    predicted_risk: float | None = None,
 ) -> None:
     sql = """
         INSERT INTO patients (record_id, data, outcome, predicted_risk, predicted_at)
@@ -104,7 +105,7 @@ def upsert_patient(
     _execute(sql, (record_id, json.dumps(data), outcome, predicted_risk))
 
 
-def get_patient(record_id: int) -> Optional[dict]:
+def get_patient(record_id: int) -> dict | None:
     row = _fetchone(
         "SELECT data FROM patients WHERE record_id = %s",
         (record_id,),
@@ -126,7 +127,7 @@ def list_patients(limit: int = 500) -> list[dict]:
         (limit,),
     )
     results = []
-    for record_id, outcome, risk, age, icu_type, icu_type_label in rows:
+    for record_id, _outcome, risk, age, icu_type, icu_type_label in rows:
         risk = float(risk) if risk is not None else 0.0
         results.append({
             "record_id": record_id,
@@ -135,11 +136,6 @@ def list_patients(limit: int = 500) -> list[dict]:
             "icu_type_label": icu_type_label or "ICU",
             "mortality_risk": risk,
             "mortality_risk_percent": round(risk * 100, 1),
-            "status": (
-                "Critical" if risk >= 0.8
-                else "High" if risk >= 0.5
-                else "Moderate" if risk >= 0.2
-                else "Low"
-            ),
+            "status": get_risk_level(risk),
         })
     return results

@@ -22,6 +22,7 @@ services:
     environment:
       - PORT=8001
       - DATABASE_URL=postgresql://vigil:vigil@postgres:5432/vigil
+      - PYTHONPATH=/app/src:/app/backend
     depends_on:
       postgres:
         condition: service_healthy

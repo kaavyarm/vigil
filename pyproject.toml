@@ -1,6 +1,23 @@
+[project]
+name = "vigil"
+version = "0.1.0"
+description = "ICU mortality risk prediction dashboard — PhysioNet 2012 Challenge"
+requires-python = ">=3.12"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "backend"]
+
 [tool.ruff]
 line-length = 100
+target-version = "py312"
 
 [tool.ruff.lint]
-select = ["E", "F", "I"]
-ignore = ["E501"]
+select = ["E", "F", "I", "W", "UP", "B", "C4", "RUF"]
+ignore = [
+    "E501",   # line-too-long — formatter handles this
+    "B006",   # mutable default args — false positives on fastapi defaults
+    "B008",   # function call in default arg — standard FastAPI pattern
+    "RUF001", # ambiguous Unicode chars — intentional: medical units (×10³/μL, σ, –)
+    "RUF003", # ambiguous Unicode in comments — same rationale
+]

@@ -5,7 +5,7 @@ import numpy as np
 
 
 def load_patient_json(file_path: str | Path) -> dict:
-    with open(file_path, "r") as f:
+    with open(file_path) as f:
         return json.load(f)
 
 
@@ -61,7 +61,7 @@ def extract_numeric_summary(measurements: list[dict], prefix: str) -> dict:
         f"{prefix}_max": float(np.nanmax(values)),
         f"{prefix}_last": float(values[-1]),
         f"{prefix}_std": float(np.nanstd(values)),
-        f"{prefix}_count": int(len(values)),
+        f"{prefix}_count": len(values),
         f"{prefix}_trend": trend if not np.isnan(trend) else np.nan,
         f"{prefix}_measured": 1,
     }

@@ -1,6 +1,2 @@
-import sys
-from pathlib import Path
-
-ROOT = Path(__file__).parent.parent
-sys.path.insert(0, str(ROOT / "src"))
-sys.path.insert(0, str(ROOT / "backend"))
+# src/ and backend/ are added to sys.path via pythonpath in pyproject.toml.
+# No manual path manipulation needed here.
