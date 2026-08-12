@@ -99,9 +99,30 @@ def _build_predict_vector(vitals: PatientVitals) -> pd.DataFrame:
     return pd.DataFrame([{col: features.get(col, np.nan) for col in feature_columns}])
 
 
+_monitoring_report: dict | None = None
+_monitoring_lock = threading.Lock()
+
+
 @app.get("/")
 def root():
     return {"message": "Vigil API is running"}
+
+
+@app.get("/monitoring/report")
+def get_monitoring_report():
+    global _monitoring_report
+    if _monitoring_report is None:
+        with _monitoring_lock:
+            if _monitoring_report is None:
+                report_path = PROJECT_ROOT / "data/monitoring/report.json"
+                if not report_path.exists():
+                    raise HTTPException(
+                        status_code=503,
+                        detail="Monitoring report not available. Run scripts/simulate_monitoring.py first.",
+                    )
+                with open(report_path) as f:
+                    _monitoring_report = json.load(f)
+    return _monitoring_report
 
 
 @app.get("/patients")

@@ -1,0 +1,68 @@
+{
+  "n_reference": 3500,
+  "n_incoming": 500,
+  "n_features_checked": 258,
+  "n_features_drifted": 0,
+  "n_features_warning": 8,
+  "top_drifted_features": [
+    {
+      "feature": "AST_trend",
+      "psi": 0.1754,
+      "status": "warning"
+    },
+    {
+      "feature": "ALT_trend",
+      "psi": 0.1495,
+      "status": "warning"
+    },
+    {
+      "feature": "Albumin_trend",
+      "psi": 0.147,
+      "status": "warning"
+    },
+    {
+      "feature": "ALP_trend",
+      "psi": 0.1406,
+      "status": "warning"
+    },
+    {
+      "feature": "ALT_min",
+      "psi": 0.1143,
+      "status": "warning"
+    },
+    {
+      "feature": "AST_std",
+      "psi": 0.1114,
+      "status": "warning"
+    },
+    {
+      "feature": "ALP_last",
+      "psi": 0.1093,
+      "status": "warning"
+    },
+    {
+      "feature": "Bilirubin_max",
+      "psi": 0.1032,
+      "status": "warning"
+    }
+  ],
+  "missingness_drifted": [],
+  "prediction_drift": {
+    "ks_statistic": 0.0371,
+    "ks_p_value": 0.5725,
+    "train_mean": 0.2001,
+    "incoming_mean": 0.1865,
+    "mean_shift": -0.0136,
+    "drifted": false
+  },
+  "calibration_drift": {
+    "current_brier": 0.0293,
+    "baseline_brier": 0.0892,
+    "brier_delta": -0.0599,
+    "current_ece": 0.0826,
+    "baseline_ece": 0.03,
+    "ece_delta": 0.0526,
+    "drifted": true
+  },
+  "overall_health": "critical"
+}
