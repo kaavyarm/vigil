@@ -1,5 +1,6 @@
 import json
 import sys
+import threading
 from pathlib import Path
 
 import joblib
@@ -51,6 +52,9 @@ PATIENT_DIR = PROJECT_ROOT / "data/processed/patients"
 model, df, X, feature_columns = load_model_and_data()
 explainer = shap.TreeExplainer(model)
 train_medians = joblib.load(PROJECT_ROOT / "models/train_medians.joblib")
+
+# SHAP TreeExplainer is not thread-safe; serialize all calls through this lock.
+_explainer_lock = threading.Lock()
 
 
 class PatientVitals(BaseModel):
@@ -134,7 +138,8 @@ def get_patients(limit: int = 500):
 @app.post("/predict")
 def predict_custom(vitals: PatientVitals):
     vector = _build_predict_vector(vitals)
-    result = explain_vector(model=model, feature_vector=vector, top_n=10, explainer=explainer)
+    with _explainer_lock:
+        result = explain_vector(model=model, feature_vector=vector, top_n=10, explainer=explainer)
     return make_json_safe(result)
 
 
@@ -151,7 +156,9 @@ def get_patient(record_id: int):
 @app.get("/patients/{record_id}/explanation")
 def get_patient_explanation(record_id: int):
     try:
-        return explain_patient(model=model, df=df, X=X, record_id=record_id, top_n=10, explainer=explainer)
+        with _explainer_lock:
+            result = explain_patient(model=model, df=df, X=X, record_id=record_id, top_n=10, explainer=explainer)
+        return make_json_safe(result)
     except ValueError:
         raise HTTPException(status_code=404, detail="Patient not found")
 
@@ -159,7 +166,7 @@ def get_patient_explanation(record_id: int):
 @app.get("/patients/{record_id}/risk-trend")
 def get_patient_risk_trend(record_id: int):
     try:
-        return build_risk_trend(record_id, model, feature_columns)
+        return make_json_safe(build_risk_trend(record_id, model, feature_columns))
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Patient not found")
 
@@ -167,6 +174,6 @@ def get_patient_risk_trend(record_id: int):
 @app.get("/patients/{record_id}/timeline-events")
 def get_patient_timeline_events(record_id: int):
     try:
-        return build_patient_timeline_events(record_id)
+        return make_json_safe(build_patient_timeline_events(record_id))
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Patient not found")
