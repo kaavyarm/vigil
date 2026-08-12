@@ -1,0 +1,47 @@
+{
+  "family": "vigil-api",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "512",
+  "memory": "1024",
+  "executionRoleArn": "arn:aws:iam::ACCOUNT_ID:role/ecsTaskExecutionRole",
+  "taskRoleArn": "arn:aws:iam::ACCOUNT_ID:role/vigilTaskRole",
+  "containerDefinitions": [
+    {
+      "name": "vigil-api",
+      "image": "ACCOUNT_ID.dkr.ecr.REGION.amazonaws.com/vigil:latest",
+      "portMappings": [
+        {
+          "containerPort": 8001,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "PORT", "value": "8001" },
+        { "name": "MODEL_BUCKET", "value": "vigil-models" }
+      ],
+      "secrets": [
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "arn:aws:secretsmanager:REGION:ACCOUNT_ID:secret:vigil/database-url"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/vigil-api",
+          "awslogs-region": "REGION",
+          "awslogs-stream-prefix": "vigil"
+        }
+      },
+      "healthCheck": {
+        "command": ["CMD-SHELL", "curl -f http://localhost:8001/health || exit 1"],
+        "interval": 30,
+        "timeout": 5,
+        "retries": 3,
+        "startPeriod": 60
+      },
+      "essential": true
+    }
+  ]
+}
