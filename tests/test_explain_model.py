@@ -1,10 +1,9 @@
 from explain_model import (
     build_feature_label,
     build_value_label,
-    get_risk_level,
     calculate_confidence,
+    get_risk_level,
 )
-
 
 # ── build_feature_label ───────────────────────────────────────
 

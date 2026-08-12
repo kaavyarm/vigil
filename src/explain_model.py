@@ -1,10 +1,9 @@
-from pathlib import Path
 import json
+from pathlib import Path
 
 import joblib
 import pandas as pd
 import shap
-
 
 _ROOT = Path(__file__).resolve().parent.parent
 DATA_PATH = _ROOT / "data/features/training_dataset.csv"

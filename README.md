@@ -1,5 +1,7 @@
 # Vigil
 
+[![CI](https://github.com/kaavyarm/vigil/actions/workflows/ci.yml/badge.svg)](https://github.com/kaavyarm/vigil/actions/workflows/ci.yml)
+
 ICU mortality risk prediction and monitoring dashboard built on the [PhysioNet 2012 Challenge](https://physionet.org/content/challenge-2012/1.0.0/) dataset.
 
 ![Vigil ICU Dashboard](docs/screenshot.png)

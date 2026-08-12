@@ -5,8 +5,7 @@ import pandas as pd
 from tqdm import tqdm
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
-from feature_engineering import load_patient_json, extract_patient_features
-
+from feature_engineering import extract_patient_features, load_patient_json
 
 PROCESSED_PATIENT_DIR = Path("data/processed/patients")
 FEATURE_OUTPUT_PATH = Path("data/features/patient_features.csv")

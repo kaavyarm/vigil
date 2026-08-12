@@ -2,7 +2,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
 TRAINING_DATA_PATH = Path("data/features/training_dataset.csv")
 
 

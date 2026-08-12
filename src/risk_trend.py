@@ -1,12 +1,11 @@
-from pathlib import Path
 import json
+from pathlib import Path
 
 import joblib
 import pandas as pd
 
 from explain_model import get_risk_level
-from feature_engineering import load_patient_json, extract_patient_features
-
+from feature_engineering import extract_patient_features, load_patient_json
 
 _ROOT = Path(__file__).resolve().parent.parent
 PROCESSED_PATIENT_DIR = _ROOT / "data/processed/patients"

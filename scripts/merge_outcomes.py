@@ -2,7 +2,6 @@ from pathlib import Path
 
 import pandas as pd
 
-
 FEATURES_PATH = Path("data/features/patient_features.csv")
 OUTCOMES_PATH = Path("data/raw/Outcomes-a.txt")
 OUTPUT_PATH = Path("data/features/training_dataset.csv")

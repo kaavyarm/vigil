@@ -1,6 +1,5 @@
 from timeline_events import classify_event, extract_timeline_events
 
-
 # ── classify_event ────────────────────────────────────────────
 
 def test_hr_spike_triggers():

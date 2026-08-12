@@ -1,14 +1,14 @@
+import json
 import sys
 from pathlib import Path
-import json
 
 from tqdm import tqdm
 
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 from process_one_patient import (
-    load_patient_record,
-    extract_static_info,
     build_timeline,
+    extract_static_info,
+    load_patient_record,
 )
 
 RAW_PATIENT_DIR = Path("data/raw/Set A")

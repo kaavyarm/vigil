@@ -1,8 +1,7 @@
-from pathlib import Path
 import json
+from pathlib import Path
 
 from feature_engineering import load_patient_json
-
 
 _ROOT = Path(__file__).resolve().parent.parent
 PROCESSED_PATIENT_DIR = _ROOT / "data/processed/patients"

@@ -1,0 +1,32 @@
+.venv/
+.git/
+.gitignore
+.claude/
+.DS_Store
+
+# Frontend — served separately
+frontend/
+
+# Pipeline scripts and tests — not needed at runtime
+scripts/
+tests/
+docs/
+
+# Raw and prediction data
+data/raw/
+data/predictions/
+
+# Model plots — static assets, not needed at runtime
+models/plots/
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# Config files not needed in container
+README.md
+render.yaml
+pytest.ini
+pyproject.toml
+docker-compose.yml

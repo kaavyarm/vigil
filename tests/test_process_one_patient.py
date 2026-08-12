@@ -1,4 +1,4 @@
-from process_one_patient import time_to_minutes, clean_value
+from process_one_patient import clean_value, time_to_minutes
 
 
 def test_time_to_minutes_zero():

@@ -1,6 +1,6 @@
-from pathlib import Path
 import json
 import sys
+from pathlib import Path
 
 import joblib
 import numpy as np
@@ -12,13 +12,14 @@ from pydantic import BaseModel
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.append(str(PROJECT_ROOT / "src"))
 
-import shap
-import math
+import math  # noqa: E402
 
-from explain_model import load_model_and_data, explain_patient, explain_vector
-from process_one_patient import ICU_TYPE_MAP
-from risk_trend import build_risk_trend
-from timeline_events import build_patient_timeline_events
+import shap  # noqa: E402
+
+from explain_model import explain_patient, explain_vector, load_model_and_data  # noqa: E402
+from process_one_patient import ICU_TYPE_MAP  # noqa: E402
+from risk_trend import build_risk_trend  # noqa: E402
+from timeline_events import build_patient_timeline_events  # noqa: E402
 
 
 def make_json_safe(obj):

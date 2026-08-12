@@ -9,6 +9,7 @@ tqdm==4.68.3
 uvicorn==0.49.0
 xgboost==3.3.0
 
-# Testing
+# Testing & linting
 httpx2==2.9.1
 pytest==9.1.1
+ruff==0.12.4
