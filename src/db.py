@@ -15,10 +15,8 @@ logger = logging.getLogger(__name__)
 
 _pool = None  # psycopg2.pool.ThreadedConnectionPool
 
-
 def is_available() -> bool:
     return _pool is not None
-
 
 def init_pool(min_conn: int = 1, max_conn: int = 10) -> None:
     """Call once at application startup. No-ops if DATABASE_URL is unset."""
@@ -37,7 +35,6 @@ def init_pool(min_conn: int = 1, max_conn: int = 10) -> None:
         logger.exception("Failed to connect to PostgreSQL — falling back to flat-file mode")
         _pool = None
 
-
 def _ensure_schema() -> None:
     """Create the patients table if it doesn't exist."""
     sql = """
@@ -52,9 +49,6 @@ def _ensure_schema() -> None:
     """
     _execute(sql)
 
-
-# ── Internal helpers ──────────────────────────────────────────────────────────
-
 def _execute(sql: str, params=None) -> None:
     conn = _pool.getconn()
     try:
@@ -63,7 +57,6 @@ def _execute(sql: str, params=None) -> None:
         conn.commit()
     finally:
         _pool.putconn(conn)
-
 
 def _fetchall(sql: str, params=None) -> list[tuple]:
     conn = _pool.getconn()
@@ -74,7 +67,6 @@ def _fetchall(sql: str, params=None) -> list[tuple]:
     finally:
         _pool.putconn(conn)
 
-
 def _fetchone(sql: str, params=None) -> tuple | None:
     conn = _pool.getconn()
     try:
@@ -83,9 +75,6 @@ def _fetchone(sql: str, params=None) -> tuple | None:
             return cur.fetchone()
     finally:
         _pool.putconn(conn)
-
-
-# ── Public CRUD ───────────────────────────────────────────────────────────────
 
 def upsert_patient(
     record_id: int,
@@ -104,14 +93,12 @@ def upsert_patient(
     """
     _execute(sql, (record_id, json.dumps(data), outcome, predicted_risk))
 
-
 def get_patient(record_id: int) -> dict | None:
     row = _fetchone(
         "SELECT data FROM patients WHERE record_id = %s",
         (record_id,),
     )
     return row[0] if row else None
-
 
 def list_patients(limit: int = 500) -> list[dict]:
     """Return patients sorted by predicted_risk descending."""

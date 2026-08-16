@@ -5,8 +5,6 @@ import pandas as pd
 from scipy import stats
 from sklearn.metrics import brier_score_loss
 
-# ── Thresholds ───────────────────────────────────────────────────────────────
-
 PSI_WARN = 0.1        # slight drift — watch
 PSI_CRITICAL = 0.2    # significant drift — act
 MISSINGNESS_DELTA = 0.10   # absolute change in missing rate to flag
@@ -14,15 +12,11 @@ KS_ALPHA = 0.05            # KS test significance level
 BRIER_DRIFT = 0.02         # Brier score degradation to flag
 ECE_DRIFT = 0.02           # ECE degradation to flag
 
-
-# ── Result dataclasses ───────────────────────────────────────────────────────
-
 @dataclass
 class FeatureDriftResult:
     feature: str
     psi: float
     status: str   # "stable" | "warning" | "drifted"
-
 
 @dataclass
 class MissingnessDriftResult:
@@ -31,7 +25,6 @@ class MissingnessDriftResult:
     incoming_rate: float
     delta: float
     drifted: bool
-
 
 @dataclass
 class PredictionDriftResult:
@@ -42,7 +35,6 @@ class PredictionDriftResult:
     mean_shift: float
     drifted: bool
 
-
 @dataclass
 class CalibrationDriftResult:
     current_brier: float
@@ -52,7 +44,6 @@ class CalibrationDriftResult:
     baseline_ece: float
     ece_delta: float
     drifted: bool
-
 
 @dataclass
 class MonitoringReport:
@@ -69,9 +60,6 @@ class MonitoringReport:
 
     def to_dict(self) -> dict:
         return asdict(self)
-
-
-# ── Core metric functions ─────────────────────────────────────────────────────
 
 def compute_psi(expected: np.ndarray, actual: np.ndarray, n_bins: int = 10) -> float:
     """Population Stability Index between two 1-D distributions."""
@@ -98,7 +86,6 @@ def compute_psi(expected: np.ndarray, actual: np.ndarray, n_bins: int = 10) -> f
     psi = float(np.sum((act_pcts - exp_pcts) * np.log(act_pcts / exp_pcts)))
     return max(psi, 0.0)
 
-
 def _expected_calibration_error(y_true: np.ndarray, y_proba: np.ndarray, n_bins: int = 10) -> float:
     bins = np.linspace(0, 1, n_bins + 1)
     ece, n = 0.0, len(y_true)
@@ -108,9 +95,6 @@ def _expected_calibration_error(y_true: np.ndarray, y_proba: np.ndarray, n_bins:
             continue
         ece += mask.sum() / n * abs(float(y_proba[mask].mean()) - float(y_true[mask].mean()))
     return float(ece)
-
-
-# ── Drift detection functions ─────────────────────────────────────────────────
 
 def compute_feature_drift(
     train_df: pd.DataFrame,
@@ -136,7 +120,6 @@ def compute_feature_drift(
 
     return sorted(results, key=lambda r: r.psi, reverse=True)
 
-
 def compute_missingness_drift(
     train_df: pd.DataFrame,
     incoming_df: pd.DataFrame,
@@ -158,7 +141,6 @@ def compute_missingness_drift(
             ))
     return sorted(results, key=lambda r: r.delta, reverse=True)
 
-
 def compute_prediction_drift(
     train_preds: np.ndarray,
     incoming_preds: np.ndarray,
@@ -173,7 +155,6 @@ def compute_prediction_drift(
         mean_shift=round(float(incoming_preds.mean() - train_preds.mean()), 4),
         drifted=bool(ks_p < KS_ALPHA),
     )
-
 
 def compute_calibration_drift(
     y_true: np.ndarray,
@@ -195,9 +176,6 @@ def compute_calibration_drift(
         ece_delta=round(ece_delta, 4),
         drifted=bool(brier_delta > BRIER_DRIFT or ece_delta > ECE_DRIFT),
     )
-
-
-# ── Report assembly ───────────────────────────────────────────────────────────
 
 def generate_report(
     train_df: pd.DataFrame,

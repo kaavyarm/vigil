@@ -28,9 +28,6 @@ from timeline_events import build_patient_timeline_events
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-
-# ── Logging ───────────────────────────────────────────────────────────────────
-
 class _JsonFormatter(logging.Formatter):
     """Structured JSON log lines — compatible with CloudWatch Logs Insights."""
 
@@ -42,7 +39,6 @@ class _JsonFormatter(logging.Formatter):
             "msg": record.getMessage(),
         })
 
-
 logging.config.dictConfig({
     "version": 1,
     "disable_existing_loggers": False,
@@ -52,9 +48,6 @@ logging.config.dictConfig({
 })
 
 logger = logging.getLogger(__name__)
-
-
-# ── Startup ───────────────────────────────────────────────────────────────────
 
 sync_from_s3(PROJECT_ROOT)
 
@@ -69,9 +62,6 @@ db.init_pool()
 
 PATIENT_DIR = PROJECT_ROOT / "data/processed/patients"
 
-
-# ── App ───────────────────────────────────────────────────────────────────────
-
 app = FastAPI(title="Vigil ICU Risk API")
 
 app.add_middleware(
@@ -81,9 +71,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-# ── Models ────────────────────────────────────────────────────────────────────
 
 class PatientVitals(BaseModel):
     Age: float | None = None
@@ -99,9 +86,6 @@ class PatientVitals(BaseModel):
     Urine: float | None = None
     MechVent: int | None = None
 
-
-# ── Helpers ───────────────────────────────────────────────────────────────────
-
 def make_json_safe(obj: Any) -> Any:
     if isinstance(obj, dict):
         return {str(key): make_json_safe(value) for key, value in obj.items()}
@@ -112,7 +96,6 @@ def make_json_safe(obj: Any) -> Any:
     if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
         return None
     return obj
-
 
 def _build_predict_vector(vitals: PatientVitals) -> pd.DataFrame:
     features = dict(train_medians)
@@ -140,7 +123,6 @@ def _build_predict_vector(vitals: PatientVitals) -> pd.DataFrame:
 
     return pd.DataFrame([{col: features.get(col, np.nan) for col in feature_columns}])
 
-
 def _patient_summary(record_id: int, age: int | None, icu_type: int | None, risk: float) -> dict:
     return {
         "record_id": record_id,
@@ -152,17 +134,12 @@ def _patient_summary(record_id: int, age: int | None, icu_type: int | None, risk
         "status": get_risk_level(risk),
     }
 
-
 _monitoring_report: dict | None = None
 _monitoring_lock = threading.Lock()
-
-
-# ── Routes ────────────────────────────────────────────────────────────────────
 
 @app.get("/")
 def root() -> dict:
     return {"message": "Vigil API is running"}
-
 
 @app.get("/health")
 def health() -> dict:
@@ -171,7 +148,6 @@ def health() -> dict:
         "status": "ok",
         "db": "connected" if db.is_available() else "unavailable",
     }
-
 
 @app.get("/monitoring/report")
 def get_monitoring_report() -> dict:
@@ -188,7 +164,6 @@ def get_monitoring_report() -> dict:
                 with open(report_path) as f:
                     _monitoring_report = json.load(f)
     return _monitoring_report
-
 
 @app.get("/patients")
 def get_patients(limit: int = 500) -> list:
@@ -210,14 +185,12 @@ def get_patients(limit: int = 500) -> list:
     patients.sort(key=lambda p: p["mortality_risk"], reverse=True)
     return patients
 
-
 @app.post("/predict")
 def predict_custom(vitals: PatientVitals) -> dict:
     vector = _build_predict_vector(vitals)
     with _explainer_lock:
         result = explain_vector(model=model, feature_vector=vector, top_n=10, explainer=explainer)
     return make_json_safe(result)
-
 
 @app.get("/patients/{record_id}")
 def get_patient(record_id: int) -> dict:
@@ -233,7 +206,6 @@ def get_patient(record_id: int) -> dict:
     with open(patient_path) as f:
         return make_json_safe(json.load(f))
 
-
 @app.get("/patients/{record_id}/explanation")
 def get_patient_explanation(record_id: int) -> dict:
     try:
@@ -245,14 +217,12 @@ def get_patient_explanation(record_id: int) -> dict:
     except ValueError:
         raise HTTPException(status_code=404, detail="Patient not found") from None
 
-
 @app.get("/patients/{record_id}/risk-trend")
 def get_patient_risk_trend(record_id: int) -> dict:
     try:
         return make_json_safe(build_risk_trend(record_id, model, feature_columns))
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Patient not found") from None
-
 
 @app.get("/patients/{record_id}/timeline-events")
 def get_patient_timeline_events(record_id: int) -> dict:
